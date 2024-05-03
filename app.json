@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "checkAutomatically": "ON_LOAD",
+      "channel": "channel0",
+      "url": "https://u.expo.dev/c66c4fab-1f98-47ab-baa6-55191ef21cd7"
+    },
+    "name": "StickerSmash",
+    "slug": "StickerSmash",
+    "version": "1.0.4",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.zch1234qq.StickerSmash"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.zch1234qq.StickerSmash"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c66c4fab-1f98-47ab-baa6-55191ef21cd7"
+      }
+    },
+    "runtimeVersion": "1.0.0",
+    "plugins": [
+      [
+        "expo-updates",
+        {
+          "username": "zch1234qq"
+        }
+      ]
+    ]
+  },
+}
