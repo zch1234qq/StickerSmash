@@ -1,5 +1,6 @@
 import axios from "axios"
 import utils from "./utils"
+import Axios from "./Axios"
 
 interface Res{
   data: Clone
@@ -23,11 +24,29 @@ class Clone {
       utils.url+"visitclone/"+cloneid
     )
     .then((res:Res)=>{
+      console.log(res.data)
+      let data=res.data
+      this.name=data.name
+      this.adminid=data.adminid
+      this.prompt=""
+      this.type=data.type
+      this.cloneid=cloneid
+      setClone(res.data)
+    })
+    .catch(res=>{
+
+    })
+  }
+  adminclone(cloneid:string,setClone:React.Dispatch<React.SetStateAction<Clone>>) {
+    Axios.get(
+      utils.url+"visitclone/"+cloneid
+    )
+    .then((res:Res)=>{
       console.log(res.data.prompt)
       let data=res.data
       this.name=data.name
       this.adminid=data.adminid
-      this.prompt=data.prompt+"1525"
+      this.prompt=data.prompt
       this.type=data.type
       this.cloneid=cloneid
       setClone(res.data)

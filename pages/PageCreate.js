@@ -24,14 +24,15 @@ function PageCreate({navigation}) {
       var data=res.data
       var cloneid=data.cloneid
       console.log("create "+cloneid)
-      navigation.navigate("admin",{cloneid:cloneid,simple:true})
+      dispatch({type:"SUCCESS",message:"创建成功"})
+      navigation.navigate("mark",{cloneid:cloneid})
     })
     .catch(res=>{
       console.log(res)
     })
   }
   return (
-    <PageBase0 name={"创建"}
+    <PageBase0 name={"创建页"}
       children={
         <View>
           <IconButton

@@ -20,103 +20,60 @@ function PageAdmin({route}) {
   const [clone,setClone]=useState(new Clone())
   const [edit,setEdit]=useState(false)
   const [disable,setDisable]=useState(true)
-  const [hasAdmin,setHasAdmin]=useState(false)
-  const [loaded,setLoaded]=useState(false)
   const {state,dispatch}=useAuth()
-  const textInputRef = useRef(null);
 
   useEffect(()=>{
-    console.log(utils.url+cloneid)
     dispatch({type:"HIDE"})
     AsyncStorage.getItem(cloneid)
     .then(res=>{
       var clone=JSON.parse(res)
       setClone(new Clone(clone.name,clone.type,clone.prompt,clone.adminid))
       console.log(clone)
-      if(data.adminid==""){
-        setHasAdmin(false)
-      }else{
-        setHasAdmin(true)
-      }
-      setLoaded(true)
     })
     .catch(res=>{
-      axios.get(
-        utils.url+"visitclone/"+cloneid
+      Axios.get(
+        utils.url+"adminclone/"+cloneid
       )
       .then(res=>{
         var data=res.data
         console.log("adminid ")
         console.log(data)
         setClone(data)
-        if(data.adminid==""){
-          setHasAdmin(false)
-        }else{
-          setHasAdmin(true)
-        }
-        setLoaded(true)
       })
       .catch(res=>{
         console.log(res)
       })
     })
   },[])
+
   function Test(){
     console.log("ceshi"+cloneid)
     navigation.navigate("use",{cloneid:cloneid})
   }
-  function mark(cloneid){
-    Axios.post("/markclone",data={cloneid:cloneid})
-    .then(res=>{
-      var data=res.data
-      console.log(data)
-      console.log("mark-then------")
-      if(data.success){
-        setHasAdmin(true)
-      }
-    })
-    .catch(err=>{
-      console.log(err)
-      console.log("mark-catch------")
-    })
-  }
+
   function Update(){
-    console.log(utils.token)
-    axios.post(
+    Axios.post(
       url=utils.url+"updateprompt",
       data={
         cloneid:cloneid,
         name:clone.name,
         prompt:clone.prompt,
-      },
-      {
-        headers: {
-          'Authorization': `Bearer ${utils.token}`
-        }
       }
     )
     .then(res=>{
       var data=res.data
       console.log(data)
+      if(data.success){
+        dispatch({type:"SUCCESS",message:data.message})
+      }else{
+        dispatch({type:"FAIL",message:data.message})
+      }
     })
     .catch(res=>{
       console.log(res)
     })
   }
-  if(!hasAdmin&&loaded){
-    return (
-      <PageBase1 name="管理">
-        <Button
-          mode='outlined'
-          icon={"star-plus-outline"}
-          onPress={()=>{
-            mark(cloneid)
-          }}
-        >标记</Button>
-      </PageBase1>
-    )
-  }
-  if(hasAdmin&&loaded) return (
+  return (
     <PageBase1 name="管理">
       {(function(){
         if(simple)
@@ -137,22 +94,17 @@ function PageAdmin({route}) {
         }
       })()}
       <ComSpacer height={20}></ComSpacer>
-      <TouchableOpacity
-        onPressIn={()=>{
-          console.log("touchable")
-          textInputRef.current.focus()}}
-      >
-        <TextInput ref={textInputRef} mode='outlined' value={clone.prompt}
-          onChangeText={(value)=>{
-            setClone(new Clone(clone.name,clone.type,value,clone.adminid))
-            setDisable(false)
-          }}
-          onFocus={()=>{setEdit(true)}}
-          onBlur={()=>{console.log("blur")}}
-          multiline
-          style={{width:'100%',paddingVertical:15}}
-        ></TextInput>
-      </TouchableOpacity>
+      <TextInput mode='outlined' value={clone.prompt}
+        onChangeText={(value)=>{
+          setClone(new Clone(clone.name,clone.type,value,clone.adminid))
+          setDisable(false)
+        }}
+        onFocus={()=>{setEdit(true)}}
+        multiline
+        label={"指令"}
+        placeholder={utils.AdminTextinputlabelPrompt_sms}
+        style={{width:'100%'}}
+      ></TextInput>
       <ComSpacer height={20}></ComSpacer>
       <Flexh>
         <Button 

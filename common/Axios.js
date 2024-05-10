@@ -29,7 +29,8 @@ export function setupInterceptors(store) {
   Axios.interceptors.response.use(
       response => response,
       error => {
-          if (error.response && error.response.status === 401) {
+          if (!utils.get401 &&error.response && error.response.status === 401) {
+              utils.get401=true
               AsyncStorage.setItem("token","")
               store.dispatch({ type: 'LOGOUT' });
               utils.navigation.navigate("login",{positive:false})

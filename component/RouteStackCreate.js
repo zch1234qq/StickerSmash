@@ -2,7 +2,7 @@ import PageCreate from '../pages/PageCreate';
 import PageAdmin from '../pages/PageAdmin';
 import PageUse from '../pages/PageUse';
 import { createStackNavigator } from '@react-navigation/stack';
-import PageLogin from '../pages/PageLogin';
+import PageMark from '../pages/PageMark';
 const Stack = createStackNavigator();
 
 function RouteStackCreate() {
@@ -11,6 +11,7 @@ function RouteStackCreate() {
       headerShown:false,
     }}>
       <Stack.Screen name="create" component={PageCreate} />
+      <Stack.Screen name="mark" component={PageMark}/>
       <Stack.Screen name="admin" component={PageAdmin}/>
       <Stack.Screen name="use" component={PageUse} />
     </Stack.Navigator>

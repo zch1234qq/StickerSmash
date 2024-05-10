@@ -9,8 +9,8 @@ const PageBase1=({children,name})=>{
     <View style={{width:'100%',height:'100%'}}>
       <View style={{width:'100%',height:'100%',position:'absolute'}}>
         <IconButton icon='chevron-left' size={36} 
-        onPress={()=>{navigation.goBack()}}
-        style={{left:0,zIndex:100,position:"absolute"}}></IconButton>
+          onPress={()=>{navigation.goBack()}}
+          style={{left:0,zIndex:100,position:"absolute"}}></IconButton>
         <PageBase0>
           {children}
         </PageBase0>

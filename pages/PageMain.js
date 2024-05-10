@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import PageState from './PageState';
-import PageLogin from './PageLogin';
 import { useNavigation } from '@react-navigation/native';
 import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import TabBarIcon from '../component/TabBarIcon';
@@ -11,11 +10,16 @@ import utils from '../common/utils';
 import { useAuth } from '../common/AuthContext';
 import { setupInterceptors } from '../common/Axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NotiSuccess } from '../component/NotiSuccess';
+import { NotiFail } from '../component/NotiFail';
+import { NotiInfo } from '../component/NotiInfo';
+import RouteStackLogin from '../component/RouteStackLogin';
 
 const Tab=createMaterialBottomTabNavigator()
 const PageMain = () => {
   utils.navigation=useNavigation()
   const {state,dispatch}=useAuth()
+  utils.dispatch=dispatch
   const store=useAuth()
   setupInterceptors(store)
   React.useEffect(()=>{
@@ -24,17 +28,23 @@ const PageMain = () => {
       console.log("token: "+token)
       utils.token=token
       if(token!=""&& token!=null){
-        store.dispatch({type:'LOGIN'})
+        dispatch({type:'LOGIN'})
       }
       else{
-        store.dispatch({type:"LOGOUT"})
+        dispatch({type:"LOGOUT"})
       }
     })
   },[dispatch])
 
   return (
+    // <View style={{width:"100vw",height:"100vh",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
+    // <View style={{width:"55vh",height:"100vh"}}>
     <View style={{width:"100%",height:"100%"}}>
-      <Tab.Navigator barStyle={{height:65,display:store.state.display}}>
+    <View style={{width:"100%",height:"100%"}}> 
+      <NotiSuccess></NotiSuccess>
+      <NotiFail></NotiFail>
+      <NotiInfo></NotiInfo>
+      <Tab.Navigator barStyle={{height:70,display:store.state.display}}>
         <Tab.Screen name="创建" component={RouteStackCreate}
           options={{
             tabBarLabel:"创建",
@@ -52,7 +62,8 @@ const PageMain = () => {
           }}
         />
         {!state.logined &&
-          <Tab.Screen name="login" component={PageLogin} initialParams={{positive:true}}
+          // <Tab.Screen name="login" component={PageLogin} initialParams={{positive:true}}
+          <Tab.Screen name="login" component={RouteStackLogin} initialParams={{positive:true}}
             options={{
               tabBarLabel:"登录",
               tabBarIcon:({focused,color})=>{
@@ -72,6 +83,7 @@ const PageMain = () => {
           />
         }
       </Tab.Navigator>
+    </View>
     </View>
   );
 };

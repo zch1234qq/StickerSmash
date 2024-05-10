@@ -11,7 +11,6 @@ const styles=StyleSheet.create({
     flexDirection:'column',
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor:"black"
   }
 })
 
