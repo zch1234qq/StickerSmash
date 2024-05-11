@@ -40,22 +40,23 @@ async function requestStoragePermission() {
     return false;
   }
 }
-async function stopRecording() {
+async function stopRecording(recCallback:(uri:string)=>void) {
     try {
         await recording.stopAndUnloadAsync();
         const uri = recording.getURI(); // 获取录音文件的 URI
         if (uri) {
-          const filename = uri.split('/').pop(); // 从 URI 中提取文件名
-          const destinationUri = `${FileSystem.documentDirectory}${filename}`;
+          recCallback(uri)
+          // const filename = uri.split('/').pop(); // 从 URI 中提取文件名
+          // const destinationUri = `${FileSystem.documentDirectory}${filename}`;
           
-          await FileSystem.moveAsync({
-            from: uri,
-            to: destinationUri,
-          });
-          playRecording(destinationUri)
+          // await FileSystem.moveAsync({
+          //   from: uri,
+          //   to: destinationUri,
+          // });
+          // playRecording(destinationUri)
 
-            console.log('Recording stopped and stored at', destinationUri);
-            return destinationUri;
+          //   console.log('Recording stopped and stored at', destinationUri);
+          //   return destinationUri;
         }
     } catch (error) {
         console.error('Failed to stop recording:', error);

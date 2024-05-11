@@ -9,6 +9,7 @@ import Flexh from "../component/Flexh";
 import { Button, IconButton } from "react-native-paper";
 import { useAuth } from "../common/AuthContext";
 import { useFocusEffect } from "@react-navigation/native";
+import Axios from "../common/Axios";
 
 const PageDesktop=({navigation})=>{
   const [clones,setClones]=useState([])
@@ -18,13 +19,8 @@ const PageDesktop=({navigation})=>{
       dispatch({type:"SHOW"})
       AsyncStorage.getItem("token")
       .then(token=>{
-        axios.get(
+        Axios.get(
           utils.url+"getuserinfo",
-          {
-            headers:{
-              'Authorization': `Bearer ${token}`
-            }
-          }
         )
         .then(res=>{
           var data=res.data

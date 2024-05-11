@@ -34,11 +34,12 @@ const PageMain = () => {
         dispatch({type:"LOGOUT"})
       }
     })
+    // utils.navigation.navigate("use",{cloneid:"65ffc5671e9d70e8ed366c13"})
   },[dispatch])
 
   return (
     // <View style={{width:"100vw",height:"100vh",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
-    // <View style={{width:"55vh",height:"100vh"}}>
+    // <View style={{width:"55vh",height:"90vh"}}>
     <View style={{width:"100%",height:"100%"}}>
     <View style={{width:"100%",height:"100%"}}> 
       <NotiSuccess></NotiSuccess>

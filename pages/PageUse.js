@@ -8,13 +8,8 @@ import utils from '../common/utils'
 import { useAuth } from '../common/AuthContext'
 import { StyleSheet } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper';
-import FileUploader from '../component/FIlePicker'
-import Axios from '../common/Axios'
 import { Audio } from 'expo-av'
-const superagent = require('superagent');
 import FormData from 'form-data'
-import * as FileSystem from 'expo-file-system';
-import * as DocumentPicker from 'expo-document-picker';
 
 export default function PageUse({route}){
   const cloneid=route.params.cloneid
@@ -25,6 +20,7 @@ export default function PageUse({route}){
   const {state,dispatch}=useAuth()
   const [messageToSend,setMessageToSend]=useState("")
   const [disabledBtSend,setDisableBtSend]=useState(true)
+  const [disabledBtMic,setDisabledBtMic]=useState(false)
   const [messages,setMessages]=useState([])
   const [sending,setSending]=useState(false)
   const [fileUri,setFileUri]=useState("")
@@ -41,47 +37,44 @@ export default function PageUse({route}){
       setHavePerm(true)
     }
   }
-  async function pickDocument() {
-    let result = await DocumentPicker.getDocumentAsync({});
-    console.log(result.assets[0].uri)
-    if (result.canceled === false) {
-      setFileUri(result.assets[0].uri)
-    } else {
-      console.error('No file selected or an error occurred');
-    }
+  function rec(fileUri){
+    setDisabledBtMic(true)
+    const file = {
+      uri: fileUri,
+      type: 'audio/aac',  // 这里以 MP3 文件为例
+      name: 'example.aac'  // 你希望上传后保存的文件名
+    };
+    const formData = new FormData();
+    formData.append('audio', file);
+    axios.postForm(utils.url2+"rec",formData,{
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+    })
+    .then(response => {
+      var recMsg=response.data.value
+      if(clone.type=="说明书"){
+        console.log("getgpt")
+        getGpt(recMsg)
+      }else{
+        postGpt(recMsg)
+      }
+    })
+    .catch(error => {
+        console.error('上传文件时出错', error);
+    })
+    .finally(res=>{
+      setDisabledBtMic(false)
+    });
   }
-  
-  async function rec() {
-    try {
-      // setFileUri("file:///data/user/0/host.exp.exponent/cache /DocumentPicker/7cf2fcc0-5aaf-4141-abe8-3b271867004c.m4a")
-      const response = await fetch(fileUri);
-      const blob = await response.blob();
-      superagent.post(utils.url2+"tooss")
-          // .attach('audio', blob, 'file.wav')
-          .then(response => {
-              console.log('Upload successful:', response);
-          })
-          .catch(error => {
-              console.error('Upload failed:', error);
-          });
-    } catch (error) {
-        console.error('Error uploading file:', error);
-    }
-  }
-  function toGpt(currentMsg){
+  function getGpt(currentMsg){
     setMessageToSend("")
     setSending(true)
-    const data = {
-      messages: [...messages,currentMsg],
-      cloneid:cloneid
-    };
-    console.log(data)
-    axios.post(
-      utils.url+"gpt",
-      data,
+    axios.get(
+      utils.url+"gpt/"+cloneid+"/"+currentMsg,
     )
     .then(res=>{
-      console.log(res)
+      console.log(res.data)
       var data=res.data
       var answer=data.msg
       messages.push(currentMsg)
@@ -93,7 +86,35 @@ export default function PageUse({route}){
       setMessages(messages)
     })
     .catch(res=>{
-      console.log("err "+res)
+      setMessageToSend(currentMsg)
+    })
+    .finally(res=>{
+      setSending(false)
+    })
+  }
+  function postGpt(currentMsg){
+    setMessageToSend("")
+    setSending(true)
+    const data = {
+      messages: [...messages,currentMsg],
+      cloneid:cloneid
+    };
+    axios.post(
+      utils.url+"gpt",
+      data,
+    )
+    .then(res=>{
+      var data=res.data
+      var answer=data.msg
+      messages.push(currentMsg)
+      messages.push(answer)
+      setAns(answer)
+      if(messages.length>4){
+          messages.splice(0,2)
+        }
+      setMessages(messages)
+    })
+    .catch(res=>{
       setMessageToSend(currentMsg)
     })
     .finally(res=>{
@@ -114,29 +135,29 @@ export default function PageUse({route}){
         return
       }
     } else {
-      // 权限已被授予
-      console.log("已有权限")
       utils.startRecording()
       setIcon("microphone");
-      setAns("nihaoa");
     }
   }
   return (
     <PageBase2>
-      <View style={{width:'100%',height:'100%',flexDirection:"column-reverse",justifyContent:'space-between',alignItems:'center'}}>
+      <View style={{width:'100%',height:'100%',flexDirection:"column",justifyContent:'space-between',alignItems:'center'}}>
+        <Text style={{fontSize:utils.fontSize1}}>{clone.name}</Text>
+        <Text style={{fontSize:utils.fontSize2,width:"80%",textAlign:'left'}}>
+          {ans}
+        </Text>
         <View style={{flexDirection:"column",justifyContent:"center",alignItems:"center",width:"100%",}}>
           {inputByAudio && <IconButton icon={icon} size={72}
+          disabled={disabledBtMic}
           style={{position:"absolute",zIndex:100}}
             onPressIn={()=>{
-              // checkPermission()
-              rec()
+              checkPermission()
             }}
             onPressOut={()=>{
-              // if(havePerm){
-              //   utils.stopRecording()
-              //   setIcon("microphone-outline")
-              //   rec()
-              // }
+              if(havePerm){
+                utils.stopRecording(rec)
+                setIcon("microphone-outline")
+              }
             }}
             >
           </IconButton>}
@@ -172,15 +193,6 @@ export default function PageUse({route}){
             </View>
           </View>
         </View>
-        <FileUploader setFileUri={setFileUri}></FileUploader>
-        <Button onPress={pickDocument} title='选择文件(测试)'></Button>
-        <Button onPress={utils.checkPermissions} title='获取权限(测试)'></Button>
-        <Text>{fileUri}</Text>
-        <Text>http://192.168.0.170:8888/rec</Text>
-        <Text style={{fontSize:utils.fontSize2,width:"80%",textAlign:'left'}}>
-          {ans}
-        </Text>
-        <Text style={{fontSize:utils.fontSize1}}>{clone.name}</Text>
       </View>
     </PageBase2>
   );
