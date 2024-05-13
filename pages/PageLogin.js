@@ -12,12 +12,15 @@ import Axios from "../common/Axios";
 import ProtocolService from "../component/ProtocolService";
 import ProtocolPrivacy from "../component/ProtocolPrivacy";
 import ProtocolBase from "../component/ProtocolBase";
+import axios from "axios";
 
 const PageLogin=({navigation,route})=>{
   const [username,setUsername]=useState("")
   const [password,setPassword]=useState("")
   const {positive=true}=route.params
   const {state,dispatch}=useAuth()
+  const [dislogin,setDislogin]=useState(false)
+  const [dislogup,setDislogup]=useState(false)
   useFocusEffect(
     useCallback(()=>{
       dispatch({type:"SHOW"})
@@ -31,10 +34,7 @@ const PageLogin=({navigation,route})=>{
     navigation.navigate("桌面")
   }
   function logup(){
-    if(username==""||password==""){
-      utils.dispatch({type:"FAIL",message:"请填写用户名、密码"})
-      return
-    }
+    setDislogup(true)
     var data={
       username:username,
       password:password
@@ -58,8 +58,12 @@ const PageLogin=({navigation,route})=>{
     .catch(res=>{
       console.log(res)
     })
+    .finally(res=>{
+      setDislogup(false)
+    })
   }
   function login(){
+    setDislogin(true)
     var data={
       username:username,
       password:password
@@ -86,6 +90,9 @@ const PageLogin=({navigation,route})=>{
     .catch(res=>{
       console.log(res)
     })
+    .finally(res=>{
+      setDislogin(false)
+    })
   }
   return (
     <PageBase0 name={'登录页'}>
@@ -102,9 +109,18 @@ const PageLogin=({navigation,route})=>{
       <ComSpacer height={15}></ComSpacer>
       <Flexh>
         <Button mode='elevated' icon='account-plus-outline'
-          onPress={()=>{dispatch({type:"SHOWDIALOG"})}}
+          disabled={dislogup}
+          onPress={()=>{
+            console.log(`username$username`)
+            if(username==""||password==""){
+              utils.dispatch({type:"FAIL",message:"请填写用户名、密码"})
+              return
+            }
+            dispatch({type:"SHOWDIALOG"})
+          }}
         >注册</Button>
         <Button mode='contained' icon='login'
+        disabled={dislogin}
           onPress={login}
         >登录</Button>
       </Flexh>
@@ -123,7 +139,10 @@ const PageLogin=({navigation,route})=>{
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={()=>{dispatch({type:"HIDEDIALOG"})}}>不同意</Button>
-            <Button onPress={()=>{dispatch({type:"HIDEDIALOG"}),logup()}}>同意</Button>
+            <Button onPress={()=>{
+              dispatch({type:"HIDEDIALOG"})
+              logup()
+            }}>同意</Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>

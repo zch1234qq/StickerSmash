@@ -9,10 +9,8 @@ import PageBase1 from '../component/PageBase1';
 import ComSpacer from '../component/ComSpacer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import Axios from '../common/Axios';
 import { useAuth } from '../common/AuthContext';
-
 
 function PageAdmin({route}) {
   var navigation=useNavigation()
@@ -20,7 +18,9 @@ function PageAdmin({route}) {
   const [clone,setClone]=useState(new Clone())
   const [edit,setEdit]=useState(false)
   const [disable,setDisable]=useState(true)
+  const [disablebtupdate,setDisablebtupdate]=useState(false)
   const {state,dispatch}=useAuth()
+  const maxLength=200
 
   useEffect(()=>{
     dispatch({type:"HIDE"})
@@ -47,11 +47,11 @@ function PageAdmin({route}) {
   },[])
 
   function Test(){
-    console.log("ceshi"+cloneid)
     navigation.navigate("use",{cloneid:cloneid})
   }
 
   function Update(){
+    setDisablebtupdate(true)
     Axios.post(
       url=utils.url+"updateprompt",
       data={
@@ -64,6 +64,7 @@ function PageAdmin({route}) {
       var data=res.data
       console.log(data)
       if(data.success){
+        AsyncStorage.setItem(cloneid,JSON.stringify(clone))
         dispatch({type:"SUCCESS",message:data.message})
       }else{
         dispatch({type:"FAIL",message:data.message})
@@ -71,6 +72,9 @@ function PageAdmin({route}) {
     })
     .catch(res=>{
       console.log(res)
+    })
+    .finally(res=>{
+      setDisablebtupdate(false)
     })
   }
   return (
@@ -95,7 +99,12 @@ function PageAdmin({route}) {
       })()}
       <ComSpacer height={20}></ComSpacer>
       <TextInput mode='outlined' value={clone.prompt}
+        maxLength={maxLength}
         onChangeText={(value)=>{
+          if(value.length>=maxLength){
+            utils.dispatch({type:"FAIL",message:"字数超过限制,更新失败"})
+            return
+          }
           setClone(new Clone(clone.name,clone.type,value,clone.adminid))
           setDisable(false)
         }}
@@ -110,7 +119,7 @@ function PageAdmin({route}) {
         <Button 
           mode='contained-tonal'
           onPress={Update}
-          disabled={disable}
+          disabled={disable||disablebtupdate}
           icon={"update"}
         >更新</Button>
         <Button 

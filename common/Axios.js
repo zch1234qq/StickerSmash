@@ -24,19 +24,32 @@ Axios.interceptors.request.use(
 );
 
 // 响应拦截器
-
 export function setupInterceptors(store) {
   Axios.interceptors.response.use(
       response => response,
       error => {
-          if (!utils.get401 &&error.response && error.response.status === 401) {
+        console.log("拦截器"+error.response)
+        console.log("拦截器"+error.request)
+        if (error.request.socket) {
+          console.log('Socket Information:');
+          console.log('  Bytes written:', error.request.socket.bytesWritten);
+          console.log('  Local address:', error.request.socket.localAddress);
+          console.log('  Local port:', error.request.socket.localPort);
+          console.log('  Remote address:', error.request.socket.remoteAddress);
+          console.log('  Remote family:', error.request.socket.remoteFamily);
+          console.log('  Remote port:', error.request.socket.remotePort);
+        }
+        if (!utils.get401 &&error.response && error.response.status === 401) {
               utils.get401=true
               AsyncStorage.setItem("token","")
               store.dispatch({ type: 'LOGOUT' });
               utils.navigation.navigate("login",{positive:false})
               console.log("Token expired. Please login again.");
-          }
-          return Promise.reject(error);
+        }
+        if(error.response && error.response.status === 502){
+          utils.dispatch({type:"FAIL",message:"服务器宕机,全力修复中"})
+        }
+        return Promise.reject(error);
       }
   );
 }

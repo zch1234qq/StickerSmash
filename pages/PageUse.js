@@ -28,15 +28,8 @@ export default function PageUse({route}){
 
   useEffect(()=>{
     dispatch({type:"HIDE"})
-    testPermission()
     clone.visitclone(cloneid,setClone)
   },[])
-  async function testPermission(){
-    const { status } = await Audio.getPermissionsAsync();
-    if(status=="granted"){
-      setHavePerm(true)
-    }
-  }
   function rec(fileUri){
     setDisabledBtMic(true)
     const file = {
@@ -46,19 +39,14 @@ export default function PageUse({route}){
     };
     const formData = new FormData();
     formData.append('audio', file);
-    axios.postForm(utils.url2+"rec",formData,{
+    axios.postForm(utils.url+"rec",formData,{
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
     })
     .then(response => {
       var recMsg=response.data.value
-      if(clone.type=="说明书"){
-        console.log("getgpt")
-        getGpt(recMsg)
-      }else{
-        postGpt(recMsg)
-      }
+      toGpt(clone.type,recMsg)
     })
     .catch(error => {
         console.error('上传文件时出错', error);
@@ -66,6 +54,14 @@ export default function PageUse({route}){
     .finally(res=>{
       setDisabledBtMic(false)
     });
+  }
+  function toGpt(type,msg){
+    if(type=="说明书"){
+      console.log("getgpt")
+      getGpt(msg)
+    }else{
+      postGpt(msg)
+    }
   }
   function getGpt(currentMsg){
     setMessageToSend("")
@@ -141,7 +137,7 @@ export default function PageUse({route}){
   }
   return (
     <PageBase2>
-      <View style={{width:'100%',height:'100%',flexDirection:"column",justifyContent:'space-between',alignItems:'center'}}>
+      <View style={{width:'100%',height:'96%',flexDirection:"column",justifyContent:'space-between',alignItems:'center'}}>
         <Text style={{fontSize:utils.fontSize1}}>{clone.name}</Text>
         <Text style={{fontSize:utils.fontSize2,width:"80%",textAlign:'left'}}>
           {ans}
@@ -184,7 +180,7 @@ export default function PageUse({route}){
               {!inputByAudio && !sending && <IconButton icon={"send-circle"} animated={true} iconColor={utils.ThemeColor.Orange} size={utils.fontSize3}
                 disabled={disabledBtSend}
                 onPress={()=>{
-                  toGpt(messageToSend)
+                  toGpt(clone.type,messageToSend)
                 }}
                 ></IconButton>}
               {!inputByAudio && sending && 

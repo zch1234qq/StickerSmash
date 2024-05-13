@@ -1,0 +1,15 @@
+# 忽略 node_modules 目录，除非是 expo-modules 目录
+node_modules
+!node_modules/expo.*
+
+# 忽略所有.log文件
+*.log
+
+# 忽略.git目录
+.git
+
+# 忽略 Android 和 iOS 的本地构建输出
+android/app/build
+ios/build
+
+# 根据你的项目具体情况添加更多排除规则

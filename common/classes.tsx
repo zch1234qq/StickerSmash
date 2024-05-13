@@ -1,6 +1,7 @@
 import axios from "axios"
 import utils from "./utils"
 import Axios from "./Axios"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 interface Res{
   data: Clone
@@ -19,23 +20,31 @@ class Clone {
     this.adminid=adminid
     this.cloneid=cloneid
   }
-  visitclone(cloneid:string,setClone:React.Dispatch<React.SetStateAction<Clone>>) {
-    axios.get(
-      utils.url+"visitclone/"+cloneid
-    )
-    .then((res:Res)=>{
-      console.log(res.data)
-      let data=res.data
-      this.name=data.name
-      this.adminid=data.adminid
-      this.prompt=""
-      this.type=data.type
-      this.cloneid=cloneid
-      setClone(res.data)
-    })
-    .catch(res=>{
-
-    })
+  async visitclone(cloneid:string,setClone:React.Dispatch<React.SetStateAction<Clone>>) {
+    const value=await AsyncStorage.getItem(cloneid)
+    if(value!=null){
+      var clone=JSON.parse(value)
+      setClone(new Clone(clone.name,clone.type,clone.prompt,clone.adminid))
+      console.log(clone)
+    }
+    else{
+      axios.get(
+        utils.url+"visitclone/"+cloneid
+      )
+      .then((res:Res)=>{
+        console.log(res.data)
+        let data=res.data
+        // this.name=data.name
+        // this.adminid=data.adminid
+        // this.prompt=""
+        // this.type=data.type
+        // this.cloneid=cloneid
+        setClone(data)
+      })
+      .catch(res=>{
+  
+      })
+    }
   }
   adminclone(cloneid:string,setClone:React.Dispatch<React.SetStateAction<Clone>>) {
     Axios.get(

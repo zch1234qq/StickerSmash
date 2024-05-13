@@ -24,6 +24,7 @@ const PageDesktop=({navigation})=>{
         )
         .then(res=>{
           var data=res.data
+          console.log(data)
           setClones(data.clones)
           data.clones.forEach((item,index)=>{
             AsyncStorage.setItem(item.cloneid,JSON.stringify(item))

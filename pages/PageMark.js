@@ -11,7 +11,7 @@ import utils from '../common/utils';
 export default function PageMark({navigation,route}) {
   var {cloneid}=route.params
   const {state,dispatch}=useAuth()
-  // const navigation=useNavigation()
+  const [dismark,setDismark]=useState(false)
 
   useEffect(()=>{
     dispatch({type:"HIDE"})
@@ -19,6 +19,7 @@ export default function PageMark({navigation,route}) {
   },[])
 
   function mark(cloneid){
+    setDismark(true)
     Axios.post("/markclone",data={cloneid:cloneid})
     .then(res=>{
       var data=res.data
@@ -33,12 +34,16 @@ export default function PageMark({navigation,route}) {
     .catch(err=>{
       console.log(err)
     })
+    .finally(res=>{
+      setDismark(false)
+    })
   }
   return (
     <PageBase1 name="标记">
       <Button
         mode='outlined'
         icon={"star-plus-outline"}
+        disabled={dismark}
         onPress={()=>{
           mark(cloneid)
         }}
