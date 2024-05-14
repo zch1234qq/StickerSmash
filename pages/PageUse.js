@@ -27,9 +27,17 @@ export default function PageUse({route}){
   const [havePerm,setHavePerm]=useState(false)
 
   useEffect(()=>{
-    dispatch({type:"HIDE"})
     clone.visitclone(cloneid,setClone)
+    check()
   },[])
+  async function check(){
+    const { status } = await Audio.getPermissionsAsync();
+    if (status !== 'granted') {
+      setHavePerm(false)
+    }else{
+      setHavePerm(true)
+    }
+  }
   function rec(fileUri){
     setDisabledBtMic(true)
     const file = {

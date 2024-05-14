@@ -1,14 +1,13 @@
-import axios from "axios";
 import { Audio } from 'expo-av';
 import * as FileSystem from 'expo-file-system';
 import * as Updates from 'expo-updates';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useState } from "react";
 import * as MediaLibrary from 'expo-media-library';
+import { UserInfo } from "./classes";
+import config from './config';
 
 let recording:Audio.Recording
-const url="https://bxjs.store:8892/"
-const url2="http://192.168.1.103:8888/"
+const url=config.url
+const url2=config.url2
 const localhost="http://localhost:8888/"
 
 async function checkPermissions() {
@@ -130,10 +129,11 @@ export const ThemeColor={
   Orange:"#ffaa00"
 }
 var get401=false
-
+let userinfo:UserInfo=new UserInfo([],[],0)
 export default{
   url,
   url2,
+  userinfo,
   localhost,
   startRecording,
   stopRecording,

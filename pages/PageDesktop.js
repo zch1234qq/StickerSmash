@@ -1,4 +1,3 @@
-import axios from "axios"
 import { useEffect, useState,useCallback } from "react"
 import {  View } from "react-native"
 import utils from "../common/utils"
@@ -10,6 +9,7 @@ import { Button, IconButton } from "react-native-paper";
 import { useAuth } from "../common/AuthContext";
 import { useFocusEffect } from "@react-navigation/native";
 import Axios from "../common/Axios";
+import { UserInfo } from "../common/classes";
 
 const PageDesktop=({navigation})=>{
   const [clones,setClones]=useState([])
@@ -20,12 +20,13 @@ const PageDesktop=({navigation})=>{
       AsyncStorage.getItem("token")
       .then(token=>{
         Axios.get(
-          utils.url+"getuserinfo",
+          "/getuserinfo",
         )
         .then(res=>{
           var data=res.data
           console.log(data)
           setClones(data.clones)
+          utils.userinfo=new UserInfo(data.cloneids,data.clones,data.maxfscount)
           data.clones.forEach((item,index)=>{
             AsyncStorage.setItem(item.cloneid,JSON.stringify(item))
           })

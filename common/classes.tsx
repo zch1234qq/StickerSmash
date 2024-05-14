@@ -1,7 +1,6 @@
 import axios from "axios"
-import utils from "./utils"
-import Axios from "./Axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import config from "./config"
 
 interface Res{
   data: Clone
@@ -13,7 +12,7 @@ class Clone {
   prompt:string
   adminid:string
   cloneid:string
-  constructor(name:string,type:string,prompt:string,adminid:string,cloneid?:string="") {
+  constructor(name:string,type:string,prompt:string,adminid:string,cloneid:string="") {
     this.name=name
     this.type=type
     this.prompt=prompt
@@ -29,7 +28,7 @@ class Clone {
     }
     else{
       axios.get(
-        utils.url+"visitclone/"+cloneid
+        config.url+"visitclone/"+cloneid
       )
       .then((res:Res)=>{
         console.log(res.data)
@@ -47,8 +46,8 @@ class Clone {
     }
   }
   adminclone(cloneid:string,setClone:React.Dispatch<React.SetStateAction<Clone>>) {
-    Axios.get(
-      utils.url+"visitclone/"+cloneid
+    axios.get(
+      config.url+"visitclone/"+cloneid
     )
     .then((res:Res)=>{
       console.log(res.data.prompt)
@@ -65,7 +64,17 @@ class Clone {
     })
   }
 }
-
+class UserInfo{
+  cloneids:Array<string>=[]
+  clones:Array<Clone>=[]
+  maxfscount:number=10
+  constructor(cloneids:Array<string>,clones:Array<Clone>,maxfscount:number){
+    this.cloneids=cloneids
+    this.clones=clones
+    this.maxfscount=maxfscount
+  }
+}
 export {
-  Clone
+  Clone,
+  UserInfo
 }

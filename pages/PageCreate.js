@@ -7,7 +7,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../common/AuthContext';
 import { useFocusEffect } from '@react-navigation/native';
-
+import ComQR from '../component/ComQR';
 
 function PageCreate({navigation}) {
   console.log("pagecreate")
@@ -22,39 +22,24 @@ function PageCreate({navigation}) {
 
   function createClone(){
     setDisablecreate(true)
-    axios.get(
-      url=utils.url+"createclone"
-    )
-    .then(res=>{
-      var data=res.data
-      var cloneid=data.cloneid
-      console.log("create "+cloneid)
-      dispatch({type:"SUCCESS",message:"创建成功"})
-      navigation.navigate("mark",{cloneid:cloneid})
-    })
-    .catch(res=>{
-      console.log(res)
-    })
-    .finally(res=>{
-      setDisablecreate(false)
-    })
+    dispatch({type:"SUCCESS",message:"创建成功"})
+    navigation.navigate("mark",{cloneid:""})
+    setDisablecreate(false)
   }
   return (
-    <PageBase0 name={"创建页"}
-      children={
-        <View>
-          <IconButton
-            icon="plus-circle-outline"
-            size={72}
-            onPress={createClone}
-            disabled={disablecreate}
+    <PageBase0 name={"创建页"}>
+      <View>
+        <IconButton
+          icon="plus-circle-outline"
+          size={72}
+          onPress={createClone}
+          disabled={disablecreate}
           />
-          <Text style={{textAlign:'center',fontSize:24}}>
-            创建分身
-          </Text>
-        </View>
-      }
-    />
+        <Text style={{textAlign:'center',fontSize:24}}>
+          创建分身
+        </Text>
+      </View>
+    </PageBase0>
   )
 };
 export default PageCreate;

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState,useRef } from 'react';
 import { View, Text } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
@@ -11,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import Axios from '../common/Axios';
 import { useAuth } from '../common/AuthContext';
+import axios from 'axios';
 
 function PageAdmin({route}) {
   var navigation=useNavigation()
@@ -23,7 +23,6 @@ function PageAdmin({route}) {
   const maxLength=200
 
   useEffect(()=>{
-    dispatch({type:"HIDE"})
     AsyncStorage.getItem(cloneid)
     .then(res=>{
       var clone=JSON.parse(res)
@@ -31,8 +30,13 @@ function PageAdmin({route}) {
       console.log(clone)
     })
     .catch(res=>{
-      Axios.get(
-        utils.url+"adminclone/"+cloneid
+      axios.get(
+        utils.url2+"adminclone/"+cloneid,
+        {
+          headers: {
+            'Authorization': `Bearer ${utils.token}`
+          }
+        }
       )
       .then(res=>{
         var data=res.data

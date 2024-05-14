@@ -12,7 +12,6 @@ import Axios from "../common/Axios";
 import ProtocolService from "../component/ProtocolService";
 import ProtocolPrivacy from "../component/ProtocolPrivacy";
 import ProtocolBase from "../component/ProtocolBase";
-import axios from "axios";
 
 const PageLogin=({navigation,route})=>{
   const [username,setUsername]=useState("")
@@ -24,14 +23,12 @@ const PageLogin=({navigation,route})=>{
   useFocusEffect(
     useCallback(()=>{
       dispatch({type:"SHOW"})
-      return()=>{
-        utils.get401=false
-      }
+      utils.get401=false
     },[])
   )
   function toDesktop(){
     dispatch({type:"LOGIN"})
-    navigation.navigate("桌面")
+    navigation.navigate("desktop")
   }
   function logup(){
     setDislogup(true)
@@ -40,7 +37,7 @@ const PageLogin=({navigation,route})=>{
       password:password
     }
     Axios.post(
-      utils.url+"logup",
+      "/logup",
       data
     )
     .then(res=>{
@@ -69,13 +66,15 @@ const PageLogin=({navigation,route})=>{
       password:password
     }
     Axios.post(
-      utils.url+"login",
+      "/login",
       data
     )
     .then(res=>{
+      console.log(res)
       var data=res.data
       utils.token=data.token
       AsyncStorage.setItem("token",utils.token)
+      AsyncStorage.setItem("maxfscount",data.maxfscount)
       console.log(data)
       if(data.success){
         dispatch({type:"SUCCESS",message:data.message})
@@ -88,7 +87,7 @@ const PageLogin=({navigation,route})=>{
       }
     })
     .catch(res=>{
-      console.log(res)
+      console.log(res.request)
     })
     .finally(res=>{
       setDislogin(false)

@@ -18,8 +18,9 @@ const HideAllNoti=(state)=>{
 function authReducer(state, action) {
   switch (action.type) {
     case 'LOGOUT':
-      // AsyncStorage.setItem("token","")
+      AsyncStorage.setItem("token","")
       AsyncStorage.clear()
+      utils.token=""
       return { ...state, logined: false };
     case 'LOGIN':
       utils.get401=false

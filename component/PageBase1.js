@@ -2,9 +2,16 @@ import { View } from "react-native";
 import PageBase0 from "./PageBase0";
 import { IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { useEffect } from "react";
+import { useAuth } from "../common/AuthContext";
 
 const PageBase1=({children,name})=>{
   const navigation=useNavigation()
+  const {state,dispatch}=useAuth()
+
+  useEffect(()=>{
+    dispatch({type:"HIDE"})
+  },[])
   return (
     <View style={{width:'100%',height:'100%'}}>
       <View style={{width:'100%',height:'100%',position:'absolute'}}>

@@ -1,9 +1,9 @@
-import { Card, Text } from "react-native-paper";
-import { View } from "react-native";
+import { Card, IconButton, Text } from "react-native-paper";
+import { Share, View } from "react-native";
 import { Clone } from "../common/classes";
 import utils from "../common/utils";
 import { useNavigation } from "@react-navigation/native";
-import Flexv from "./Flexv";
+import Flexh from "./Flexh";
 
 const CardBase=({clone,color,children})=>{
   var navigation=useNavigation()
@@ -19,7 +19,13 @@ const CardBase=({clone,color,children})=>{
       >
         <Card.Content style={{height:"100%",flexDirection:"column",justifyContent:"space-between"}}>
           <Text style={{textAlign:"center",fontSize:utils.fontSize1}}>{clone.name}</Text>
-          {children}
+          <Flexh>
+            {children}
+            <IconButton
+              icon={"share"}
+              onPress={()=>utils.navigation.navigate("share",{cloneid:clone.cloneid})}
+            ></IconButton>
+          </Flexh>
         </Card.Content>
       </Card>
     </View>

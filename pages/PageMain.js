@@ -73,7 +73,7 @@ const PageMain = () => {
           />
         }
         {state.logined &&
-          <Tab.Screen name="桌面" component={RouteStackDesktop}
+          <Tab.Screen name="desktop" component={RouteStackDesktop}
             options={{
               tabBarLabel:"桌面",
               tabBarIcon:({focused,color})=>{
