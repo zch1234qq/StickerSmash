@@ -14,7 +14,6 @@ export default function PageMark({navigation,route}) {
   const [dismark,setDismark]=useState(false)
 
   useEffect(()=>{
-    dispatch({type:"HIDE"})
     console.log("intoMark")
   },[])
 

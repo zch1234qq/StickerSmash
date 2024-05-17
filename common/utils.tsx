@@ -4,6 +4,7 @@ import * as Updates from 'expo-updates';
 import * as MediaLibrary from 'expo-media-library';
 import { UserInfo } from "./classes";
 import config from './config';
+import { DefaultTheme } from 'react-native-paper';
 
 let recording:Audio.Recording
 const url=config.url
@@ -116,6 +117,21 @@ var dispatch=null
 var hideNavBar=null
 var logined
 var setLogined
+const theme = {
+  ...DefaultTheme,
+  // 覆盖颜色
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#FFA726',   // 活力橙作为主要颜色
+    accent: '#ffd95b',    // 选择一个亮黄色作为次要强调颜色
+    background: '#ffffff', // 白色背景
+    surface: '#ffffff',   // 白色表面
+    text: '#333333',      // 深灰色文本，确保足够的对比度
+    onPrimary: '#ffffff', // 主色上的文本和图标用白色以保证可读性
+    // 继续定义其他需要的颜色
+  },
+};
+
 const AdminTextinputlabelClonename_sms="例如:XX产品使用说明"
 const AdminTextinputlabelClonename_kf="客服名称(例如:XX店铺售前客服))"
 const AdminTextinputlabelPrompt_sms="例如:你是__产品的使用说明,__产品重800克,工作温度范围是0℃~50℃)"
@@ -124,6 +140,11 @@ const TipColor={
   Success:"#ffecec",
   Fail:"#003300",
   Info:"#000077",
+}
+const Colors={
+  "说明书": "blue",
+  "客服":"green",
+  "分身":"orange",
 }
 export const ThemeColor={
   Orange:"#ffaa00"
@@ -150,9 +171,11 @@ export default{
   setLogined,
   AdminTextinputlabelClonename_sms,
   AdminTextinputlabelPrompt_sms,
+  Colors,
   TipColor,
   get401,
   ThemeColor,
   requestStoragePermission,
   checkPermissions,
+  theme
 }

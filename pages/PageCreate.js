@@ -1,15 +1,17 @@
-import { Drawer, Button, Checkbox, Text, Icon, IconButton } from 'react-native-paper';
+import { Text, Icon, IconButton } from 'react-native-paper';
 import * as React from 'react';
-import utils from '../common/utils';
-import PageBase0 from '../component/PageBase0';
+import  PageBase01 from '../component/PageBase01';
 import { View } from 'react-native';
 import { useState } from 'react';
-import axios from 'axios';
 import { useAuth } from '../common/AuthContext';
 import { useFocusEffect } from '@react-navigation/native';
-import ComQR from '../component/ComQR';
+import ComSearch from '../component/ComSearch';
 
 function PageCreate({navigation}) {
+  const store=useAuth()
+  if(store.state.empty){
+    return
+  }
   console.log("pagecreate")
   const {state,dispatch}=useAuth()
   const [disablecreate,setDisablecreate]=useState(false)
@@ -27,7 +29,8 @@ function PageCreate({navigation}) {
     setDisablecreate(false)
   }
   return (
-    <PageBase0 name={"创建页"}>
+    <PageBase01 name={""}>
+      <ComSearch></ComSearch>
       <View>
         <IconButton
           icon="plus-circle-outline"
@@ -39,7 +42,7 @@ function PageCreate({navigation}) {
           创建分身
         </Text>
       </View>
-    </PageBase0>
+    </PageBase01>
   )
 };
 export default PageCreate;

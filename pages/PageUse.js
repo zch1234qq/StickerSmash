@@ -10,6 +10,7 @@ import { StyleSheet } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper';
 import { Audio } from 'expo-av'
 import FormData from 'form-data'
+import PageBase0 from '../component/PageBase0'
 
 export default function PageUse({route}){
   const cloneid=route.params.cloneid
@@ -17,16 +18,25 @@ export default function PageUse({route}){
   const [icon,setIcon]=useState('microphone-outline')
   const [ans,setAns]=useState("")
   const [inputByAudio,setInputByAudio]=useState(true)
-  const {state,dispatch}=useAuth()
   const [messageToSend,setMessageToSend]=useState("")
   const [disabledBtSend,setDisableBtSend]=useState(true)
   const [disabledBtMic,setDisabledBtMic]=useState(false)
   const [messages,setMessages]=useState([])
   const [sending,setSending]=useState(false)
-  const [fileUri,setFileUri]=useState("")
   const [havePerm,setHavePerm]=useState(false)
+  const [ansAlign,setAnsAlign]=useState("left")
+  const [cloneidOK,setCloneidOK]=useState(false)
 
   useEffect(()=>{
+    var cloneIdLen=cloneid.length
+    if(cloneIdLen!=24){
+      utils.dispatch({type:"FAIL",message:"不存在,请检查id对错"})
+      setCloneidOK(false)
+      return
+    }
+    else{
+      setCloneidOK(true)
+    }
     clone.visitclone(cloneid,setClone)
     check()
   },[])
@@ -36,6 +46,14 @@ export default function PageUse({route}){
       setHavePerm(false)
     }else{
       setHavePerm(true)
+    }
+  }
+  function SetAns(ans){
+    setAns(ans)
+    if(ans.length>10){
+      setAnsAlign("left")
+    }else{
+      setAnsAlign("center")
     }
   }
   function rec(fileUri){
@@ -83,7 +101,7 @@ export default function PageUse({route}){
       var answer=data.msg
       messages.push(currentMsg)
       messages.push(answer)
-      setAns(answer)
+      SetAns(answer)
       if(messages.length>4){
           messages.splice(0,2)
         }
@@ -112,7 +130,7 @@ export default function PageUse({route}){
       var answer=data.msg
       messages.push(currentMsg)
       messages.push(answer)
-      setAns(answer)
+      SetAns(answer)
       if(messages.length>4){
           messages.splice(0,2)
         }
@@ -143,11 +161,21 @@ export default function PageUse({route}){
       setIcon("microphone");
     }
   }
+  if(!cloneidOK){
+    return(
+      <PageBase2>
+        <Text style={{fontSize:utils.fontSize2,color:"gray"}}>
+          空无一物
+        </Text>
+      </PageBase2>
+    )
+  }
+  else
   return (
     <PageBase2>
       <View style={{width:'100%',height:'96%',flexDirection:"column",justifyContent:'space-between',alignItems:'center'}}>
-        <Text style={{fontSize:utils.fontSize1}}>{clone.name}</Text>
-        <Text style={{fontSize:utils.fontSize2,width:"80%",textAlign:'left'}}>
+        <Text style={{fontSize:utils.fontSize2}}>{clone.name}</Text>
+        <Text style={{fontSize:utils.fontSize2,width:"80%",textAlign:ansAlign}}>
           {ans}
         </Text>
         <View style={{flexDirection:"column",justifyContent:"center",alignItems:"center",width:"100%",}}>

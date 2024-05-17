@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { View,Dimensions } from "react-native";
 import { Chip } from "react-native-paper";
+import utils from "../common/utils";
 
 const ChipBase=({type,color})=>{
   const [width,setWidth]=useState(0)
@@ -11,10 +12,10 @@ const ChipBase=({type,color})=>{
   },[])
 
   return (
-    <View style={{width:width,left:0,bottom:0}}>
+    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
       <Chip
-        textStyle={{fontSize:12,color:'white'}}
-        style={{backgroundColor:color}}
+        textStyle={{fontSize:12,color:'white',textAlign:"center"}}
+        style={{backgroundColor:utils.Colors[type],}}
         onPress={()=>{console.log(type)}}
       >{type}</Chip>
     </View>

@@ -4,6 +4,8 @@ import utils from './utils';
 
 const AuthContext = createContext();
 const initialState = {
+  empty:false,
+  empty2:false,
   logined: false,
   display:'all',
   notiSuc:false,
@@ -26,9 +28,9 @@ function authReducer(state, action) {
       utils.get401=false
       return { ...state, logined: true };
     case 'HIDE':
-      return { ...state, display: 'none' };
+      return { ...state,empty:true ,empty2:false, display: 'none'};
     case 'SHOW':
-      return { ...state, display: 'all' };
+      return { ...state,empty:false,empty2:true, display: 'all' };
     case 'SUCCESS':
       state=HideAllNoti(state)
       return { ...state, notiSuc: true, notiMessage: action.message};

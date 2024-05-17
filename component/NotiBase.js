@@ -12,7 +12,7 @@ export const NotiBase=({visible,message,color,textColor="white",icon,iconColor="
         visible={visible}
         onDismiss={()=>{dispatch({type:"NOTIHIDE"})}}
         style={{backgroundColor:color,position:"absolute"}}
-        duration={1500}
+        duration={1000}
         action={{
           icon:icon,
           textColor:iconColor

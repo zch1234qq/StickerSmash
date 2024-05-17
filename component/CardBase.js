@@ -22,7 +22,7 @@ const CardBase=({clone,color,children})=>{
           <Flexh>
             {children}
             <IconButton
-              icon={"share"}
+              icon={"qrcode"}
               onPress={()=>utils.navigation.navigate("share",{cloneid:clone.cloneid})}
             ></IconButton>
           </Flexh>

@@ -1,20 +1,35 @@
 import * as React from 'react';
-import {Button, PaperProvider, Text } from 'react-native-paper';
+import { PaperProvider } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import PageMain from './pages/PageMain';
 import { NavigationContainer } from '@react-navigation/native';
-import { AuthProvider,useAuth } from './common/AuthContext';
-import * as FileSystem from 'expo-file-system';
+import { AuthProvider} from './common/AuthContext';
+import utils from './common/utils';
+import { DefaultTheme as PaperDefaultTheme } from 'react-native-paper';
+import { DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 
+const CombinedTheme = {
+  ...PaperDefaultTheme,
+  ...NavigationDefaultTheme,
+  colors: {
+    ...PaperDefaultTheme.colors,
+    ...NavigationDefaultTheme.colors,
+    primary: '#FFA726',
+    background: '#ffffff',
+    card: '#FFA726',
+    text: '#ffffff',
+    border: '#FFA726',
+  }
+};
 const App = () => {
   return (
-    <PaperProvider>
+    <PaperProvider theme={utils.theme}>
       <SafeAreaView>
-        <NavigationContainer>
           <AuthProvider>
+        <NavigationContainer>
             <PageMain></PageMain>
-          </AuthProvider>
         </NavigationContainer>
+          </AuthProvider>
       </SafeAreaView>
     </PaperProvider>
   );
