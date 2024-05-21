@@ -3,7 +3,6 @@ import WebView from "react-native-webview"
 import { View } from "react-native"
 import utils from "../common/utils"
 import { useEffect } from "react"
-import { useAuth } from "../common/AuthContext"
 
 export default PageProtocolBase=({url,logup})=>{
   useEffect(()=>{

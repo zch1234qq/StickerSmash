@@ -1,18 +1,10 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import PageState from './PageState';
-import PageLogin from './PageLogin';
 import { useNavigation } from '@react-navigation/native';
-import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
-import TabBarIcon from '../component/TabBarIcon';
-import RouteStackCreate from '../component/RouteStackCreate';
-import RouteStackDesktop from '../component/RouteStackDesktop';
 import utils from '../common/utils';
 import { useAuth } from '../common/AuthContext';
 import { setupInterceptors } from '../common/Axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import PageDesktop from './PageDesktop';
-import PageAdmin from './PageAdmin';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RouteStackBottom } from '../component/RouteStackBottom';
 import { RouteStackOther } from '../component/RouteStackOther';

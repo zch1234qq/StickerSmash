@@ -1,6 +1,5 @@
 import { Button, IconButton, Text } from "react-native-paper";
 import PageBase2 from "../component/PageBase2";
-// import QRCode from "react-native-qrcode-svg";
 import QRCode from "react-qr-code";
 import * as Clipboard from 'expo-clipboard';
 import config from "../common/config";

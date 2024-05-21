@@ -5,12 +5,10 @@ import PageBase2 from '../component/PageBase2'
 import { IconButton, TextInput } from 'react-native-paper'
 import axios from 'axios'
 import utils from '../common/utils'
-import { useAuth } from '../common/AuthContext'
 import { StyleSheet } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper';
 import { Audio } from 'expo-av'
 import FormData from 'form-data'
-import PageBase0 from '../component/PageBase0'
 
 export default function PageUse({route}){
   const cloneid=route.params.cloneid

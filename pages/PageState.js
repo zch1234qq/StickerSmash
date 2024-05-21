@@ -1,5 +1,4 @@
 import ComState from "../component/ComState"
-import { Clone } from "../common/classes"
 import utils from "../common/utils"
 const { useEffect, useState,useCallback } = require("react")
 const { default: PageBase0 } = require("../component/PageBase0")
@@ -7,7 +6,6 @@ const { default: AsyncStorage } = require("@react-native-async-storage/async-sto
 import axios from "axios"
 import ComSpacer from "../component/ComSpacer"
 import { View } from "react-native"
-import { useNavigation } from "@react-navigation/native"
 import { Text } from "react-native-paper"
 import { useAuth } from "../common/AuthContext"
 import { useFocusEffect } from "@react-navigation/native"

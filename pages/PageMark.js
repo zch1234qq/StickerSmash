@@ -1,9 +1,6 @@
 import React, { useEffect, useState,useRef } from 'react';
 import { Button, TextInput } from 'react-native-paper';
-import { Clone } from '../common/classes';
 import PageBase1 from '../component/PageBase1';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
 import Axios from '../common/Axios';
 import { useAuth } from '../common/AuthContext';
 import utils from '../common/utils';

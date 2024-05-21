@@ -3,7 +3,6 @@
     "updates": {
       "fallbackToCacheTimeout": 0,
       "checkAutomatically": "ON_LOAD",
-      "channel": "channel0",
       "url": "https://u.expo.dev/c66c4fab-1f98-47ab-baa6-55191ef21cd7"
     },
     "name": "StickerSmash",
@@ -31,7 +30,10 @@
       },
       "package": "com.zch1234qq.StickerSmash",
       "permissions": ["RECORD_AUDIO"],
-      "blockedPermissions": ["READ_EXTERNAL_STORAGE","WRITE_EXTERNAL_STORAGE"]
+      "blockedPermissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
