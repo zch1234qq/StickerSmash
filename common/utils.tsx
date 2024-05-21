@@ -1,5 +1,4 @@
 import { Audio } from 'expo-av';
-// import * as FileSystem from 'expo-file-system';
 import * as Updates from 'expo-updates';
 import * as MediaLibrary from 'expo-media-library';
 import { UserInfo } from "./classes";

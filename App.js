@@ -27,7 +27,7 @@ const App = () => {
       <SafeAreaView>
           <AuthProvider>
         <NavigationContainer>
-            <PageMain></PageMain>
+            {/* <PageMain></PageMain> */}
         </NavigationContainer>
           </AuthProvider>
       </SafeAreaView>

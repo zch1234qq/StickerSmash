@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import utils from './utils';
-import { useNavigation } from '@react-navigation/native';
 
 // 创建axios实例
 const Axios = axios.create({
