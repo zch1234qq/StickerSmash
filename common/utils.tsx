@@ -1,6 +1,6 @@
 import { Audio } from 'expo-av';
 import * as Updates from 'expo-updates';
-import * as MediaLibrary from 'expo-media-library';
+// import * as MediaLibrary from 'expo-media-library';
 import { UserInfo } from "./classes";
 import config from './config';
 import { DefaultTheme } from 'react-native-paper';
@@ -10,14 +10,14 @@ const url=config.url
 const url2=config.url2
 const localhost="http://localhost:8888/"
 
-async function checkPermissions() {
-  const { status } = await MediaLibrary.requestPermissionsAsync();
-  if (status === 'granted') {
-    console.log('Media library permissions granted');
-  } else {
-    console.log('Media library permissions denied');
-  }
-}
+// async function checkPermissions() {
+//   const { status } = await MediaLibrary.requestPermissionsAsync();
+//   if (status === 'granted') {
+//     console.log('Media library permissions granted');
+//   } else {
+//     console.log('Media library permissions denied');
+//   }
+// }
 
 async function playRecording(uri:string) {
   const sound = new Audio.Sound();
@@ -176,6 +176,6 @@ export default{
   get401,
   ThemeColor,
   // requestStoragePermission,
-  checkPermissions,
+  // checkPermissions,
   theme
 }

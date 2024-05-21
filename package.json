@@ -19,7 +19,6 @@
     "expo-av": "^13.10.6",
     "expo-clipboard": "~5.0.1",
     "expo-document-picker": "~11.10.1",
-    "expo-media-library": "~15.9.2",
     "expo-status-bar": "~1.11.1",
     "expo-system-ui": "~2.9.4",
     "expo-updates": "~0.24.12",
