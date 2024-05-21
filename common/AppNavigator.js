@@ -1,11 +1,9 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PageCreate from '../pages/PageCreate';
 import PageState from '../pages/PageState';
 import PageLogin from '../pages/PageLogin';
 import PageDesktop from '../pages/PageDesktop';
 import PageAdmin from '../pages/PageAdmin';
 import PageUse from '../pages/PageUse';
-import { View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 

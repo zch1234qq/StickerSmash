@@ -30,7 +30,8 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.zch1234qq.StickerSmash",
-      "permissions": ["RECORD_AUDIO"]
+      "permissions": ["RECORD_AUDIO"],
+      "blockedPermissions": ["READ_EXTERNAL_STORAGE","WRITE_EXTERNAL_STORAGE"]
     },
     "web": {
       "favicon": "./assets/favicon.png"

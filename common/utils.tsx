@@ -1,5 +1,5 @@
 import { Audio } from 'expo-av';
-import * as FileSystem from 'expo-file-system';
+// import * as FileSystem from 'expo-file-system';
 import * as Updates from 'expo-updates';
 import * as MediaLibrary from 'expo-media-library';
 import { UserInfo } from "./classes";
@@ -30,20 +30,21 @@ async function playRecording(uri:string) {
   }
 }
 
-async function requestStoragePermission() {
-  const { status } = await FileSystem.requestPermissionsAsync();
-  if (status === 'granted') {
-    console.log('File system permission granted');
-    return true;
-  } else {
-    console.log('File system permission denied');
-    return false;
-  }
-}
+// async function requestStoragePermission() {
+//   const { status } = await FileSystem.requestPermissionsAsync();
+//   if (status === 'granted') {
+//     console.log('File system permission granted');
+//     return true;
+//   } else {
+//     console.log('File system permission denied');
+//     return false;
+//   }
+// }
 async function stopRecording(recCallback:(uri:string)=>void) {
     try {
         await recording.stopAndUnloadAsync();
         const uri = recording.getURI(); // 获取录音文件的 URI
+        playRecording(uri!)
         if (uri) {
           recCallback(uri)
           // const filename = uri.split('/').pop(); // 从 URI 中提取文件名
@@ -175,7 +176,7 @@ export default{
   TipColor,
   get401,
   ThemeColor,
-  requestStoragePermission,
+  // requestStoragePermission,
   checkPermissions,
   theme
 }
