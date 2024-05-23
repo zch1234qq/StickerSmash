@@ -39,7 +39,7 @@ function PageCreate({navigation}) {
           disabled={disablecreate}
           />
         <Text style={{textAlign:'center',fontSize:24}}>
-          创建分身
+          创建说明书
         </Text>
       </View>
     </PageBase01>
