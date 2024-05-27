@@ -49,7 +49,7 @@ const PageMain = () => {
           options={{
             tabBarLabel:"创建",
             tabBarIcon:({focused,color})=>{
-              return <TabBarIcon name0={"plus-box"} name1={"plus-box-outline"} focused={focused}></TabBarIcon>
+              return <TabBarIcon name0={"plus-circle"} name1={"plus-circle-outline"} focused={focused}></TabBarIcon>
             }
           }}
         />

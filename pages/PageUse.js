@@ -9,6 +9,7 @@ import { StyleSheet } from 'react-native'
 import { ActivityIndicator } from 'react-native-paper';
 import { Audio } from 'expo-av'
 import FormData from 'form-data'
+import config from '../common/config'
 
 export default function PageUse({route}){
   const cloneid=route.params.cloneid
@@ -91,7 +92,7 @@ export default function PageUse({route}){
     setMessageToSend("")
     setSending(true)
     axios.get(
-      utils.url+"gpt/"+cloneid+"/"+currentMsg,
+      config.url+"gpt/"+cloneid+"/"+currentMsg,
     )
     .then(res=>{
       console.log(res.data)
@@ -107,6 +108,7 @@ export default function PageUse({route}){
     })
     .catch(res=>{
       setMessageToSend(currentMsg)
+      console.log(res)
     })
     .finally(res=>{
       setSending(false)
@@ -211,7 +213,7 @@ export default function PageUse({route}){
               }}
             ></TextInput>}
             <View style={{flex:1.5,padding:0}} >
-              {!inputByAudio && !sending && <IconButton icon={"send-circle"} animated={true} iconColor={utils.ThemeColor.Orange} size={utils.fontSize3}
+              {!inputByAudio && !sending && <IconButton icon={"send-circle"} animated={true} iconColor={utils.theme.colors.primary} size={utils.fontSize3}
                 disabled={disabledBtSend}
                 onPress={()=>{
                   toGpt(clone.type,messageToSend)

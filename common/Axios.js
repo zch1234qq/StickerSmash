@@ -1,10 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import utils from './utils';
+import config from './config';
 
 // 创建axios实例
 const Axios = axios.create({
-    baseURL: "https://bxjs.store:8892", // 替换成你的Axios基础链接
+    baseURL: config.url, // 替换成你的Axios基础链接
     timeout: 5000 // 请求超时时间
 });
 

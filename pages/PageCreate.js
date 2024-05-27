@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useAuth } from '../common/AuthContext';
 import { useFocusEffect } from '@react-navigation/native';
 import ComSearch from '../component/ComSearch';
+import utils from '../common/utils';
 
 function PageCreate({navigation}) {
   const store=useAuth()
@@ -31,12 +32,13 @@ function PageCreate({navigation}) {
   return (
     <PageBase01 name={""}>
       <ComSearch></ComSearch>
-      <View>
+      <View style={{flexDirection:'column',alignItems:"center"}}>
         <IconButton
           icon="plus-circle-outline"
-          size={72}
+          size={utils.fontSize5}
           onPress={createClone}
           disabled={disablecreate}
+          iconColor={utils.theme.colors.primary}
           />
         <Text style={{textAlign:'center',fontSize:24}}>
           创建说明书

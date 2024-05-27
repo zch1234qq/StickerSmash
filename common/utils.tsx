@@ -112,6 +112,8 @@ var fontSize0=12
 var fontSize1=18
 var fontSize2=24
 var fontSize3=36
+var fontSize4=72
+var fontSize5=90
 var navigation=null
 var dispatch=null
 var hideNavBar=null
@@ -146,9 +148,6 @@ const Colors={
   "客服":"green",
   "分身":"orange",
 }
-export const ThemeColor={
-  Orange:"#ffaa00"
-}
 var get401=false
 let userinfo:UserInfo=new UserInfo([],[],0)
 export default{
@@ -164,6 +163,8 @@ export default{
   fontSize1,
   fontSize2,
   fontSize3,
+  fontSize4,
+  fontSize5,
   navigation,
   dispatch,
   hideNavBar,
@@ -174,7 +175,6 @@ export default{
   Colors,
   TipColor,
   get401,
-  ThemeColor,
   // requestStoragePermission,
   // checkPermissions,
   theme
