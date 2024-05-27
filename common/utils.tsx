@@ -1,6 +1,5 @@
 import { Audio } from 'expo-av';
 import * as Updates from 'expo-updates';
-// import * as MediaLibrary from 'expo-media-library';
 import { UserInfo } from "./classes";
 import config from './config';
 import { DefaultTheme } from 'react-native-paper';
@@ -19,44 +18,12 @@ const localhost="http://localhost:8888/"
 //   }
 // }
 
-async function playRecording(uri:string) {
-  const sound = new Audio.Sound();
-  try {
-      await sound.loadAsync({ uri });
-      await sound.playAsync();
-  } catch (error) {
-      console.error('Error loading or playing sound:', error);
-  }
-}
-
-// async function requestStoragePermission() {
-//   const { status } = await FileSystem.requestPermissionsAsync();
-//   if (status === 'granted') {
-//     console.log('File system permission granted');
-//     return true;
-//   } else {
-//     console.log('File system permission denied');
-//     return false;
-//   }
-// }
 async function stopRecording(recCallback:(uri:string)=>void) {
     try {
         await recording.stopAndUnloadAsync();
         const uri = recording.getURI(); // 获取录音文件的 URI
-        playRecording(uri!)
         if (uri) {
           recCallback(uri)
-          // const filename = uri.split('/').pop(); // 从 URI 中提取文件名
-          // const destinationUri = `${FileSystem.documentDirectory}${filename}`;
-          
-          // await FileSystem.moveAsync({
-          //   from: uri,
-          //   to: destinationUri,
-          // });
-          // playRecording(destinationUri)
-
-          //   console.log('Recording stopped and stored at', destinationUri);
-          //   return destinationUri;
         }
     } catch (error) {
         console.error('Failed to stop recording:', error);
