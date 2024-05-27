@@ -22,7 +22,7 @@ export default function ComSearch(){
   return (
     <View style={styles.centered}>
       <Searchbar
-        placeholder="id / 链接"
+        placeholder="说明书id"
         onChangeText={onChangeSearch}
         value={searchQuery}
         style={{ flex:8}}

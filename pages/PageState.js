@@ -30,7 +30,6 @@ const PageState=({navigation})=>{
     },[])
   )
 
-
   function payAttention(){
     // axios.post(
     //   utils.url+"/payattention",
