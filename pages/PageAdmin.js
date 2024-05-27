@@ -82,7 +82,7 @@ function PageAdmin({route}) {
     })
   }
   return (
-    <PageBase1 name="管理">
+    <PageBase1 name="管理页">
       {(function(){
         if(simple)
           return

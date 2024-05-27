@@ -47,7 +47,7 @@ export default function PageMark({navigation,route}) {
     })
   }
   return (
-    <PageBase1 name="标记">
+    <PageBase1 name="标记页">
       <Button
         mode='outlined'
         icon={"star-plus-outline"}
