@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useRef } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text,Dimensions } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import utils from '../common/utils';
 import { Clone } from '../common/classes';
@@ -20,7 +20,8 @@ function PageAdmin({route}) {
   const [disable,setDisable]=useState(true)
   const [disablebtupdate,setDisablebtupdate]=useState(false)
   const {state,dispatch}=useAuth()
-  const maxLength=200
+  const { width, height } = Dimensions.get('window');
+  const maxLength=300
 
   useEffect(()=>{
     AsyncStorage.getItem(cloneid)
@@ -103,11 +104,12 @@ function PageAdmin({route}) {
       })()}
       <ComSpacer height={20}></ComSpacer>
       <TextInput mode='outlined' value={clone.prompt}
+        contentStyle={{maxHeight:height*0.4}}
         maxLength={maxLength}
         onChangeText={(value)=>{
           if(value.length>=maxLength){
-            utils.dispatch({type:"FAIL",message:"字数超过限制,更新失败"})
-            return
+            utils.dispatch({type:"FAIL",message:"字数超过限制,多余部分自动删除"})
+            value=value.slice(0,maxLength)
           }
           setClone(new Clone(clone.name,clone.type,value,clone.adminid))
           setDisable(false)

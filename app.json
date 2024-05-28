@@ -5,11 +5,11 @@
       "checkAutomatically": "ON_LOAD",
       "url": "https://u.expo.dev/c66c4fab-1f98-47ab-baa6-55191ef21cd7"
     },
-    "name": "StickerSmash",
-    "slug": "StickerSmash",
+    "name": "智能说明书",
+    "slug": "znsms",
     "version": "1.0.4",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon.jpg",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -21,14 +21,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.zch1234qq.StickerSmash"
+      "bundleIdentifier": "top.fenshen.zs"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.zch1234qq.StickerSmash",
+      "package": "top.fenshen.zs",
       "permissions": ["RECORD_AUDIO"],
       "blockedPermissions": [
         "android.permission.READ_EXTERNAL_STORAGE",
